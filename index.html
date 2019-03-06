@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>goldbach_html</title>
+</head>
+<body>
+<dl id="results"></dl>>
+<script>
+function getPrimes(n) {
+  var sieve = [], i, j, primes = []
+  for (i = 2; i <= n; ++i) {
+    if (!sieve[i]) {
+      primes.push(i)
+      for (j = i << 1; j <= n; j += i) sieve[j] = true
+    }
+  }
+  return primes
+}
+
+function goldbach(initial) {
+  var list = getPrimes(initial)
+  while (list.length > 0) {
+    var item = list.shift()
+    if (item * 2 === initial) return item + " + " + item
+    var index = list.indexOf(initial - item)
+    if  (index !== -1) {
+      var itemPair = list.splice(index, 1)[0]
+      return item + " + " + itemPair
+    }
+  }
+}
+
+var results = document.getElementById('results');
+
+function main(n = 1) {
+  var initial = 2 * n + 2
+  var result = goldbach(initial)
+  if (result) {
+    var text = initial + ' = ' + result;
+    var li = document.createElement('li');
+    li.innerText = text;
+    console.log(text);
+    results.insertBefore(li, results.firstChild);
+    setTimeout(main, 1, n+1);
+  }
+}
+
+main(1)
+</script>
+</body>
+</html>
