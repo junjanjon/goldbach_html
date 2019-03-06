@@ -41,7 +41,8 @@ function main(n = 1) {
     var li = document.createElement('li');
     li.innerText = text;
     console.log(text);
-    alert(text);
+    if (n < 5) 
+      { alert(text); }
     results.insertBefore(li, results.firstChild);
     setTimeout(main, 1, n+1);
   }
